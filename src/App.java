@@ -4,10 +4,33 @@ import java.util.*;
 public class App {
     private List<Integer> randomArr = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
     private int opt_size = 3; //기본 사이즈
+    private int count=0;
+    private Scanner scanner = new Scanner(System.in);
 
     public void start() {
-        // 정답을 만드는 함수
-        Scanner scanner = new Scanner(System.in);
+        while(true) {
+            System.out.println("환영합니다! 원하시는 번호를 입력해주세요\n" +
+                    "1. 게임 시작하기 2. 게임 기록 보기 3. 종료하기");
+            String input = scanner.nextLine();
+
+            if(!isValidNumber(input)){
+                System.out.println("올바르지 않은 입력값입니다.");
+                continue;
+            }
+
+            if(input.equals("1")){
+                game();
+            }else if(input.equals("2")){
+                continue;
+            }else if(input.equals("3")) {
+                break;
+            }else{
+                System.out.println("올바르지 않는 입력값입니다.");
+            }
+        }
+        scanner.close();
+    }
+    private void game(){
         String answer = makeAnswer();
         System.out.println(answer);
         while (true) {
@@ -23,7 +46,7 @@ public class App {
             }
 
             // 3. 세 자리가 아니거나, 0을 가지거나 특정 숫자가 두 번 사용된 경우 반복문 처음으로 돌아가기
-            if (!isThreeDigitNumber(input) || hasDuplicateDigits(input) || input.contains("0")) {
+            if (!isThreeDigitNumber(input) || hasDuplicateDigits(input) || containsZero(input)) {
                 System.out.println("올바르지 않은 입력값입니다.");
                 continue;
             }
@@ -35,10 +58,9 @@ public class App {
                 break;
             }else{
                 System.out.println(getStrikeAndBall(answer,input));
+                count++;
             }
-
         }
-        scanner.close();
     }
 
     private String makeAnswer() {

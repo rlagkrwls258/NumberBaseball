@@ -5,7 +5,6 @@ public class Main {
 
         App app = new App();
 
-
         System.out.println("< 게임을 시작합니다 >");
         app.start();
     }
