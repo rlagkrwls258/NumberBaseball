@@ -4,25 +4,40 @@ import java.util.*;
 public class App {
     private List<Integer> randomArr = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
     private int opt_size = 3; //기본 사이즈
-    private int count=0;
+    private List<Integer> gameLog = new ArrayList<Integer>();
     private Scanner scanner = new Scanner(System.in);
 
     public void start() {
+        System.out.println("환영합니다! 원하시는 번호를 입력해주세요.");
         while(true) {
-            System.out.println("환영합니다! 원하시는 번호를 입력해주세요\n" +
-                    "1. 게임 시작하기 2. 게임 기록 보기 3. 종료하기");
+            System.out.println("0. 자리수 설정 1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기");
             String input = scanner.nextLine();
 
             if(!isValidNumber(input)){
                 System.out.println("올바르지 않은 입력값입니다.");
                 continue;
             }
+            if(input.equals("0")){
+                System.out.println("\n설정하고자 하는 자리수를 입력하세요.");
 
-            if(input.equals("1")){
+                String input_opt = scanner.nextLine();
+                if (!isValidNumber(input_opt)) {
+                    System.out.println("올바르지 않은 입력값입니다.");
+                    continue;
+                }
+                opt_size = Integer.parseInt(input_opt);
+                System.out.println(opt_size+"자리수 난이도로 설정되었습니다.");
+
+            } else if(input.equals("1")){
                 game();
             }else if(input.equals("2")){
-                continue;
+                int i = 1;
+                for(int log : gameLog){
+                    System.out.println(i++ +"번째 게임 : 시도 횟수 -"+ log);
+                }
+                System.out.println();
             }else if(input.equals("3")) {
+                System.out.println("< 숫자 야구 게임을 종료합니다 >");
                 break;
             }else{
                 System.out.println("올바르지 않는 입력값입니다.");
@@ -32,7 +47,10 @@ public class App {
     }
     private void game(){
         String answer = makeAnswer();
-        System.out.println(answer);
+//        System.out.println(answer);
+
+
+        int count = 0;
         while (true) {
             System.out.println("숫자를 입력하세요");
 
@@ -54,6 +72,7 @@ public class App {
             // 4. 정답과 유저의 입력값을 비교하여 스트라이크/볼을 출력하기
             // 만약 정답이라면 break 호출하여 반복문 탈출
             if(input.equals(answer)){
+                gameLog.add(count++);
                 System.out.println("정답입니다.");
                 break;
             }else{
